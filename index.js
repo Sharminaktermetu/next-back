@@ -20,7 +20,7 @@ async function run() {
     try {
         // Connect to MongoDB
         await client.connect();
-        console.log("Connected to MongoDB");
+        console.log("Connected  MongoDB");
         const db = client.db('traditional');
         const taskCollection = db.collection('products');
         
