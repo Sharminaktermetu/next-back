@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
@@ -46,7 +46,23 @@ async function run() {
         
         
         
-
+        app.get('/product/:id', async (req, res) => {
+            const productId = req.params.id;
+        
+            try {
+                const product = await taskCollection.findOne({ _id:new ObjectId(productId) });
+        
+                if (!product) {
+                    return res.status(404).send("Product not found");
+                }
+        
+                res.send(product);
+            } catch (error) {
+                console.error("Error retrieving product:", error);
+                res.status(500).send("Internal Server Error");
+            }
+        });
+        
 
         app.get('/all-products', async (req, res) => {
           
